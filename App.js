@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import {
   SafeAreaView,
+  TouchableWithoutFeedback,
   ActivityIndicator,
   View,
   StyleSheet,
   FlatList,
-  Alert,
 } from "react-native";
-import { uuid } from "uuidv4";
+
 import {
   useFonts,
   Raleway_500Medium,
@@ -19,6 +19,13 @@ import ListItem from "./components/ListItem.js";
 import AddItem from "./components/AddItem";
 import Wrapper from "./components/Wrapper";
 
+// generate unique IDs
+const uuid = () => {
+  return "00000000-0000-4000-8000-000000000000".replace(/0/g, function () {
+    return (0 | (Math.random() * 16)).toString(16);
+  });
+};
+
 const App = (props) => {
   const [items, setItems] = useState([]);
 
@@ -29,13 +36,16 @@ const App = (props) => {
   };
 
   const addItem = (text) => {
-    if (!text) {
-      Alert.alert("Error", "Please enter an item", { text: "OK" });
-    } else {
+    //prevent from sending an empty field
+    if (text) {
       setItems((prevItems) => {
         return [...prevItems, { id: uuid(), text }];
       });
     }
+  };
+
+  const clearAll = () => {
+    setItems("");
   };
 
   let [fontsLoaded] = useFonts({
@@ -48,20 +58,22 @@ const App = (props) => {
   } else {
     return (
       <SafeAreaView>
-        <View style={[styles.container, { fontFamily: "Raleway_500Medium" }]}>
-          <Header title="My Basket" />
-          <Wrapper>
-            <AddItem addItem={addItem} />
-            <FlatList
-              style={styles.flatList}
-              data={items}
-              inverted
-              renderItem={({ item }) => (
-                <ListItem item={item} deleteItem={deleteItem} />
-              )}
-            />
-          </Wrapper>
-        </View>
+        <TouchableWithoutFeedback onPress={() => {}}>
+          <View style={[styles.container, { fontFamily: "Raleway_500Medium" }]}>
+            <Header clearAll={clearAll} />
+            <Wrapper>
+              <AddItem addItem={addItem} />
+              <FlatList
+                style={styles.flatList}
+                data={items}
+                inverted
+                renderItem={({ item }) => (
+                  <ListItem item={item} deleteItem={deleteItem} />
+                )}
+              />
+            </Wrapper>
+          </View>
+        </TouchableWithoutFeedback>
       </SafeAreaView>
     );
   }
@@ -69,11 +81,11 @@ const App = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 12,
-    paddingTop: 30,
+    paddingTop: 40,
+    fontFamily: "Raleway_500Medium",
   },
   flatList: {
-    marginTop: 12,
+    margin: 12,
   },
 });
 

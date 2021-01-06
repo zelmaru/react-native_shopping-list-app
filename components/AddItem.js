@@ -10,7 +10,9 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 function AddItem(props) {
   const [text, setText] = useState("");
-  const [focus, setFocus] = useState(false);
+  // // view or hide button depending on input field focus
+  // const [focus, setFocus] = useState(false);
+
   const onChange = (textValue) => {
     setText(textValue);
   };
@@ -18,48 +20,54 @@ function AddItem(props) {
   const onSent = () => {
     setText("");
     props.addItem(text);
+    // setFocus(false);
   };
 
-  const viewBtn = () => {
-    setFocus(true);
-  };
+  // const viewBtn = () => {
+  //   setFocus(true);
+  // };
 
-  const hideBtn = () => {
-    setFocus(false);
-  };
+  // const hideBtn = () => {
+  //   setFocus(false);
+  // };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.addContainer}>
       <TextInput
         placeholder="New item..."
-        //bind the value to clear input after sending
+        //bind the value (to clear the input after sending)
         value={text}
         style={styles.input}
         onChangeText={onChange}
-        onFocus={viewBtn}
-        onBlur={!text && hideBtn}
+        // onFocus={viewBtn}
+        // onBlur={!text && hideBtn}
       />
-      {focus && (
-        <TouchableOpacity style={styles.btn} onPress={onSent}>
-          <Text style={styles.btnText}>
-            <Icon name="plus" size={30} color="#fff" />
-          </Text>
-        </TouchableOpacity>
-      )}
+      <TouchableOpacity style={styles.btn} onPress={onSent}>
+        {/* <Text style={styles.btnText}> */}
+        <Icon name="plus" size={24} color="#fff" />
+        {/* </Text> */}
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  addContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginLeft: 12,
+    marginRight: 12,
+  },
   input: {
-    height: 60,
-    padding: 9,
-    border: "2px solid grey",
-    textAlign: "center",
+    height: 50,
     borderRadius: 4,
-    fontFamily: "Raleway_500Medium",
+    fontSize: 16,
     marginBottom: 12,
+    borderBottomColor: "grey",
+    borderBottomWidth: 2,
+    width: "80%",
+    paddingLeft: 17,
   },
   btn: {
     backgroundColor: "#ff577f",
@@ -67,11 +75,13 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: 46,
     height: 46,
-    margin: "auto",
+    elevation: 2,
+    // margin: 12,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   btnText: {
-    color: "darkblue",
-    fontSize: 20,
     textAlign: "center",
   },
 });
