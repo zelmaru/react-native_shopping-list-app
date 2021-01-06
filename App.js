@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import {
-  Share,
-  Button,
-  TouchableOpacity,
   SafeAreaView,
   TouchableWithoutFeedback,
   ActivityIndicator,
@@ -10,7 +7,6 @@ import {
   StyleSheet,
   FlatList,
 } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
 import {
   useFonts,
   Raleway_500Medium,
@@ -21,6 +17,7 @@ import Header from "./components/Header.js";
 import ListItem from "./components/ListItem.js";
 import AddItem from "./components/AddItem";
 import Wrapper from "./components/Wrapper";
+import IconBtn from "./components/IconBtn";
 
 // generate unique IDs
 const uuid = () => {
@@ -100,9 +97,7 @@ const App = (props) => {
                 )}
               />
               {items.length != 0 && (
-                <TouchableOpacity onPress={onShare}>
-                  <Icon name="share-alt" />
-                </TouchableOpacity>
+                <IconBtn shareBtn btnAction={onShare} iconName="share-alt" />
               )}
             </Wrapper>
           </View>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import ConfirmModal from "./ConfirmModal";
 import Icon from "react-native-vector-icons/FontAwesome";
+import IconBtn from "./IconBtn";
 
 function Header(props) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -25,12 +26,11 @@ function Header(props) {
         <Text style={styles.content}>
           <Icon name="shopping-basket" size={24} color="#fff" /> Shopping List
         </Text>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => setModalVisible(true)}
-        >
-          <Icon name="trash-o" size={24} color="#fff" />
-        </TouchableOpacity>
+        <IconBtn
+          header
+          btnAction={() => setModalVisible(true)}
+          iconName="trash-o"
+        />
       </View>
     </View>
   );
@@ -54,21 +54,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     marginRight: "auto",
-  },
-  btn: {
-    backgroundColor: "#ff577f",
-    padding: 9,
-    borderRadius: 4,
-    width: 46,
-    height: 46,
-    margin: 12,
-    position: "absolute",
-    top: 1.5,
-    right: 1,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 2,
   },
 });
 
