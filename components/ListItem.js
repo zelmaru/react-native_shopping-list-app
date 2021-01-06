@@ -35,7 +35,7 @@ function ListItem({ item, deleteItem }) {
 
 const styles = StyleSheet.create({
   listItem: {
-    padding: 7,
+    paddingLeft: 7,
     backgroundColor: "#f7f7f7",
     marginBottom: 7,
     borderRadius: 4,
@@ -46,12 +46,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    height: 30,
   },
   listItemText: {
     marginLeft: 10,
     fontSize: 16,
     color: "grey",
+    width: "80%",
   },
   icon: {
     padding: 12,
