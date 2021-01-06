@@ -1,17 +1,9 @@
 import React, { useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 function AddItem(props) {
   const [text, setText] = useState("");
-  // // view or hide button depending on input field focus
-  // const [focus, setFocus] = useState(false);
 
   const onChange = (textValue) => {
     setText(textValue);
@@ -20,16 +12,7 @@ function AddItem(props) {
   const onSent = () => {
     setText("");
     props.addItem(text);
-    // setFocus(false);
   };
-
-  // const viewBtn = () => {
-  //   setFocus(true);
-  // };
-
-  // const hideBtn = () => {
-  //   setFocus(false);
-  // };
 
   return (
     <View style={styles.addContainer}>
@@ -39,13 +22,9 @@ function AddItem(props) {
         value={text}
         style={styles.input}
         onChangeText={onChange}
-        // onFocus={viewBtn}
-        // onBlur={!text && hideBtn}
       />
       <TouchableOpacity style={styles.btn} onPress={onSent}>
-        {/* <Text style={styles.btnText}> */}
         <Icon name="plus" size={24} color="#fff" />
-        {/* </Text> */}
       </TouchableOpacity>
     </View>
   );
@@ -76,13 +55,9 @@ const styles = StyleSheet.create({
     width: 46,
     height: 46,
     elevation: 2,
-    // margin: 12,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-  },
-  btnText: {
-    textAlign: "center",
   },
 });
 
