@@ -1,7 +1,5 @@
 # React-Native---Shopping-List-App
-Mobile App
-
-Client side mobile app (my first attempt to get familiar with React Native).
+Client-side mobile app (my first attempt to get familiar with React Native).
 
 Features: 
 
