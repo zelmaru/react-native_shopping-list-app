@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import {
+  Share,
+  Button,
+  TouchableOpacity,
   SafeAreaView,
   TouchableWithoutFeedback,
   ActivityIndicator,
@@ -7,7 +10,7 @@ import {
   StyleSheet,
   FlatList,
 } from "react-native";
-
+import Icon from "react-native-vector-icons/FontAwesome";
 import {
   useFonts,
   Raleway_500Medium,
@@ -53,6 +56,31 @@ const App = (props) => {
     Raleway_700Bold,
   });
 
+  // get an array of items text only
+  const msgArray = items.map((item) => item.text);
+  // concatenate that array to a string adding separators
+  const msgText = msgArray.join("\n");
+
+  // enable sharing shopping list as pure text
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: "My Shopping List:\n" + msgText,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   if (!fontsLoaded) {
     return <ActivityIndicator size="large" color="#ff577f" />;
   } else {
@@ -71,6 +99,11 @@ const App = (props) => {
                   <ListItem item={item} deleteItem={deleteItem} />
                 )}
               />
+              {items.length != 0 && (
+                <TouchableOpacity onPress={onShare}>
+                  <Icon name="share-alt" />
+                </TouchableOpacity>
+              )}
             </Wrapper>
           </View>
         </TouchableWithoutFeedback>
