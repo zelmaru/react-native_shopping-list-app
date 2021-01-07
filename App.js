@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
   },
   flatList: {
     margin: 12,
+    maxHeight: "61%",
   },
 });
 
