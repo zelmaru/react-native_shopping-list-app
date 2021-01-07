@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Share,
   SafeAreaView,
-  TouchableWithoutFeedback,
+  // TouchableWithoutFeedback,
   ActivityIndicator,
   View,
   StyleSheet,
   FlatList,
+  Dimensions,
 } from "react-native";
 import {
   useFonts,
@@ -28,6 +29,24 @@ const uuid = () => {
 };
 
 const App = (props) => {
+  // get dimensions to set the flatlist height
+  const window = Dimensions.get("window");
+  const screen = Dimensions.get("screen");
+
+  const [dimensions, setDimensions] = useState({ window, screen });
+
+  const onChange = ({ window, screen }) => {
+    setDimensions({ window, screen });
+  };
+
+  useEffect(() => {
+    Dimensions.addEventListener("change", onChange);
+    return () => {
+      Dimensions.removeEventListener("change", onChange);
+    };
+  });
+
+  // items
   const [items, setItems] = useState([]);
 
   const deleteItem = (id) => {
@@ -54,7 +73,7 @@ const App = (props) => {
     Raleway_700Bold,
   });
 
-  // get an array of items text only
+  // get an array of items text only in reverse order (flatlist rendered inverted)
   const msgArray = items.map((item) => "▪ " + item.text).reverse();
   // concatenate that array to a string adding separators
   const msgText = msgArray.join("\n");
@@ -84,25 +103,29 @@ const App = (props) => {
   } else {
     return (
       <SafeAreaView>
-        <TouchableWithoutFeedback onPress={() => {}}>
-          <View style={[styles.container, { fontFamily: "Raleway_500Medium" }]}>
-            <Header clearAll={clearAll} itemsLength={items.length} />
-            <Wrapper>
-              <AddItem addItem={addItem} />
-              <FlatList
-                style={styles.flatList}
-                data={items}
-                inverted
-                renderItem={({ item }) => (
-                  <ListItem item={item} deleteItem={deleteItem} />
-                )}
-              />
-              {items.length != 0 && (
-                <IconBtn shareBtn btnAction={onShare} iconName="share-alt" />
+        <View style={[styles.container, { fontFamily: "Raleway_500Medium" }]}>
+          <Header clearAll={clearAll} itemsLength={items.length} />
+          <Wrapper>
+            <AddItem addItem={addItem} />
+            {/* <TouchableWithoutFeedback onPress={() => {}}> */}
+            <FlatList
+              persistentScrollbar={true}
+              style={[
+                styles.flatList,
+                { maxHeight: dimensions.window.height / 2.5 },
+              ]}
+              data={items}
+              inverted
+              renderItem={({ item }) => (
+                <ListItem item={item} deleteItem={deleteItem} />
               )}
-            </Wrapper>
-          </View>
-        </TouchableWithoutFeedback>
+            />
+            {/* </TouchableWithoutFeedback> */}
+            {items.length != 0 && (
+              <IconBtn shareBtn btnAction={onShare} iconName="sharealt" />
+            )}
+          </Wrapper>
+        </View>
       </SafeAreaView>
     );
   }
@@ -115,7 +138,6 @@ const styles = StyleSheet.create({
   },
   flatList: {
     margin: 12,
-    maxHeight: "61%",
   },
 });
 

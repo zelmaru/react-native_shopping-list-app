@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/AntDesign";
 
 function IconBtn(props) {
   return (
@@ -38,6 +38,9 @@ const styles = StyleSheet.create({
   },
   btnShare: {
     marginLeft: "auto",
+    // position: "absolute",
+    // bottom: 1.5,
+    // right: 1,
   },
 });
 

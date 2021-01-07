@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/AntDesign";
 import ConfirmModal from "./ConfirmModal";
 
 function ListItem({ item, deleteItem }) {
@@ -25,7 +25,7 @@ function ListItem({ item, deleteItem }) {
             style={styles.icon}
             onPress={() => setModalVisible(true)}
           >
-            <Icon name="trash-o" size={20} color="grey" />
+            <Icon name="delete" size={20} color="grey" />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
