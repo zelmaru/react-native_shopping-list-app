@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import {
   Share,
-  Button,
-  TouchableOpacity,
   SafeAreaView,
   TouchableWithoutFeedback,
   ActivityIndicator,
@@ -10,7 +8,6 @@ import {
   StyleSheet,
   FlatList,
 } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
 import {
   useFonts,
   Raleway_500Medium,
@@ -21,6 +18,7 @@ import Header from "./components/Header.js";
 import ListItem from "./components/ListItem.js";
 import AddItem from "./components/AddItem";
 import Wrapper from "./components/Wrapper";
+import IconBtn from "./components/IconBtn";
 
 // generate unique IDs
 const uuid = () => {
@@ -100,9 +98,7 @@ const App = (props) => {
                 )}
               />
               {items.length != 0 && (
-                <TouchableOpacity style={styles.shareButton} onPress={onShare}>
-                  <Icon name="share-alt" size={24} color="#fff" />
-                </TouchableOpacity>
+                <IconBtn shareBtn btnAction={onShare} iconName="share-alt" />
               )}
             </Wrapper>
           </View>
@@ -119,19 +115,6 @@ const styles = StyleSheet.create({
   },
   flatList: {
     margin: 12,
-  },
-  shareButton: {
-    backgroundColor: "#ff577f",
-    padding: 9,
-    width: 46,
-    height: 46,
-    margin: 12,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 2,
-    marginLeft: "auto",
-    borderRadius: 4,
   },
 });
 
