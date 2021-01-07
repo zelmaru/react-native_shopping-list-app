@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import {
+  Share,
+  Button,
+  TouchableOpacity,
   SafeAreaView,
   TouchableWithoutFeedback,
   ActivityIndicator,
@@ -7,6 +10,7 @@ import {
   StyleSheet,
   FlatList,
 } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
 import {
   useFonts,
   Raleway_500Medium,
@@ -17,7 +21,6 @@ import Header from "./components/Header.js";
 import ListItem from "./components/ListItem.js";
 import AddItem from "./components/AddItem";
 import Wrapper from "./components/Wrapper";
-import IconBtn from "./components/IconBtn";
 
 // generate unique IDs
 const uuid = () => {
@@ -45,7 +48,7 @@ const App = (props) => {
   };
 
   const clearAll = () => {
-    setItems("");
+    setItems([]);
   };
 
   let [fontsLoaded] = useFonts({
@@ -54,7 +57,7 @@ const App = (props) => {
   });
 
   // get an array of items text only
-  const msgArray = items.map((item) => item.text);
+  const msgArray = items.map((item) => "▪ " + item.text);
   // concatenate that array to a string adding separators
   const msgText = msgArray.join("\n");
 
@@ -62,7 +65,7 @@ const App = (props) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: "My Shopping List:\n" + msgText,
+        message: "Shopping List:\n" + msgText,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -85,7 +88,7 @@ const App = (props) => {
       <SafeAreaView>
         <TouchableWithoutFeedback onPress={() => {}}>
           <View style={[styles.container, { fontFamily: "Raleway_500Medium" }]}>
-            <Header clearAll={clearAll} />
+            <Header clearAll={clearAll} itemsLength={items.length} />
             <Wrapper>
               <AddItem addItem={addItem} />
               <FlatList
@@ -97,7 +100,9 @@ const App = (props) => {
                 )}
               />
               {items.length != 0 && (
-                <IconBtn shareBtn btnAction={onShare} iconName="share-alt" />
+                <TouchableOpacity style={styles.shareButton} onPress={onShare}>
+                  <Icon name="share-alt" size={24} color="#fff" />
+                </TouchableOpacity>
               )}
             </Wrapper>
           </View>
@@ -114,6 +119,19 @@ const styles = StyleSheet.create({
   },
   flatList: {
     margin: 12,
+  },
+  shareButton: {
+    backgroundColor: "#ff577f",
+    padding: 9,
+    width: 46,
+    height: 46,
+    margin: 12,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 2,
+    marginLeft: "auto",
+    borderRadius: 4,
   },
 });
 
