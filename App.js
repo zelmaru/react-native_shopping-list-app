@@ -55,7 +55,7 @@ const App = (props) => {
   });
 
   // get an array of items text only
-  const msgArray = items.map((item) => "▪ " + item.text);
+  const msgArray = items.map((item) => "▪ " + item.text).reverse();
   // concatenate that array to a string adding separators
   const msgText = msgArray.join("\n");
 
