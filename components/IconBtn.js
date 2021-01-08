@@ -7,19 +7,28 @@ function IconBtn(props) {
     <TouchableOpacity
       // default button is square (border-radius: 4)
       style={[
-        styles.btn,
+        props.greyBtn ? styles.greyBtn : styles.btn,
         { borderRadius: props.round ? 50 : 4 },
         props.header && styles.btnHeader,
         props.shareBtn && styles.btnShare,
       ]}
       onPress={() => props.btnAction()}
     >
-      <Icon name={props.iconName} size={24} color="#fff" />
+      <Icon
+        name={props.iconName}
+        size={props.greyBtn ? 20 : 24}
+        color={props.greyBtn ? "grey" : "#fff"}
+      />
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
+  greyBtn: {
+    // padding: 12,
+    // paddingLeft: 0,
+    // paddingRight: 0,
+  },
   btn: {
     backgroundColor: "#ff577f",
     padding: 9,

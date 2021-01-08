@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   Share,
   SafeAreaView,
-  // TouchableWithoutFeedback,
   ActivityIndicator,
   View,
   StyleSheet,
@@ -49,12 +48,6 @@ const App = (props) => {
   // items
   const [items, setItems] = useState([]);
 
-  const deleteItem = (id) => {
-    setItems((prevItems) => {
-      return prevItems.filter((item) => item.id != id);
-    });
-  };
-
   const addItem = (text) => {
     //prevent from sending an empty field
     if (text) {
@@ -62,6 +55,17 @@ const App = (props) => {
         return [...prevItems, { id: uuid(), text }];
       });
     }
+  };
+
+  const editItem = (id, text) => {
+    const foundIndex = items.findIndex((item) => item.id == id);
+    items[foundIndex] = { id, text };
+  };
+
+  const deleteItem = (id) => {
+    setItems((prevItems) => {
+      return prevItems.filter((item) => item.id != id);
+    });
   };
 
   const clearAll = () => {
@@ -107,7 +111,6 @@ const App = (props) => {
           <Header clearAll={clearAll} itemsLength={items.length} />
           <Wrapper>
             <AddItem addItem={addItem} />
-            {/* <TouchableWithoutFeedback onPress={() => {}}> */}
             <FlatList
               persistentScrollbar={true}
               style={[
@@ -117,10 +120,13 @@ const App = (props) => {
               data={items}
               inverted
               renderItem={({ item }) => (
-                <ListItem item={item} deleteItem={deleteItem} />
+                <ListItem
+                  item={item}
+                  deleteItem={deleteItem}
+                  editItem={editItem}
+                />
               )}
             />
-            {/* </TouchableWithoutFeedback> */}
             {items.length != 0 && (
               <IconBtn shareBtn btnAction={onShare} iconName="sharealt" />
             )}

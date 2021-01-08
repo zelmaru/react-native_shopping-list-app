@@ -1,10 +1,27 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/AntDesign";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import ConfirmModal from "./ConfirmModal";
+import IconBtn from "./IconBtn";
 
-function ListItem({ item, deleteItem }) {
+function ListItem({ item, deleteItem, editItem }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
+  const [itemText, setItemText] = useState(item.text);
+
+  const handleInputChange = (textValue) => {
+    setItemText(textValue);
+  };
+
+  const saveText = () => {
+    setIsEditable(false);
+    editItem(item.id, itemText);
+  };
 
   return (
     <View>
@@ -18,15 +35,36 @@ function ListItem({ item, deleteItem }) {
           onConfirm={() => deleteItem(item.id)}
         />
       )}
-      <TouchableOpacity style={styles.listItem}>
+      <TouchableOpacity
+        style={[styles.listItem, isEditable && styles.listItemEditable]}
+      >
         <View style={styles.listItemView}>
-          <Text style={styles.listItemText}>{item.text}</Text>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => setModalVisible(true)}
-          >
-            <Icon name="delete" size={20} color="grey" />
-          </TouchableOpacity>
+          {isEditable ? (
+            <TextInput
+              style={styles.listItemText}
+              onChangeText={handleInputChange}
+              value={itemText}
+            />
+          ) : (
+            <Text style={styles.listItemText}>{itemText}</Text>
+          )}
+          {!isEditable && (
+            <IconBtn
+              greyBtn
+              iconName="edit"
+              btnAction={() => setIsEditable(true)}
+            />
+          )}
+          {!isEditable && (
+            <IconBtn
+              greyBtn
+              iconName="delete"
+              btnAction={() => setModalVisible(true)}
+            />
+          )}
+          {isEditable && (
+            <IconBtn greyBtn iconName="save" btnAction={saveText} />
+          )}
         </View>
       </TouchableOpacity>
     </View>
@@ -35,11 +73,18 @@ function ListItem({ item, deleteItem }) {
 
 const styles = StyleSheet.create({
   listItem: {
-    paddingLeft: 7,
+    padding: 12,
+    paddingLeft: 12,
     backgroundColor: "#f7f7f7",
     marginBottom: 7,
     borderRadius: 4,
     elevation: 2,
+  },
+  listItemEditable: {
+    borderWidth: 2,
+    borderColor: "grey",
+    padding: 8,
+    paddingLeft: 10,
   },
   listItemView: {
     display: "flex",
@@ -48,13 +93,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   listItemText: {
-    marginLeft: 10,
+    marginLeft: 5,
     fontSize: 16,
     color: "grey",
-    width: "80%",
-  },
-  icon: {
-    padding: 12,
+    width: "70%",
   },
 });
 
