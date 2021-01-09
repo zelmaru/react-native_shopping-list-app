@@ -47,9 +47,6 @@ const styles = StyleSheet.create({
   },
   btnShare: {
     marginLeft: "auto",
-    // position: "absolute",
-    // bottom: 1.5,
-    // right: 1,
   },
 });
 

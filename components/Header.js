@@ -3,6 +3,7 @@ import { Text, View, StyleSheet } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 import ConfirmModal from "./ConfirmModal";
 import IconBtn from "./IconBtn";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 function Header(props) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -44,6 +45,7 @@ function Header(props) {
             />
           </Svg>
           <Text style={styles.contentText}>Shopping List</Text>
+          <ThemeSwitcher />
         </View>
         {props.itemsLength != 0 && (
           <IconBtn
