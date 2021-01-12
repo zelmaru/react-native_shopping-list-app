@@ -19,7 +19,6 @@ import ListItem from "./components/ListItem.js";
 import AddItem from "./components/AddItem";
 import Wrapper from "./components/Wrapper";
 import IconBtn from "./components/IconBtn";
-import ThemeSwitcher from "./components/ThemeSwitcher";
 
 // generate unique IDs
 const uuid = () => {
