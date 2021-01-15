@@ -1,9 +1,6 @@
 # React-Native---Shopping-List-App
 Mobile App
-Mobile app UI (my first attempt to get familiar with React Native).
+Add, edit or delete items and share your list. Only UI (my first attempt to get familiar with React Native). Items get deleted after closing the app. They won't if app runs in background.
 
 Features:
 
-adding / deleting particular items
-after adding first item, buttons "delete all"  and "share" appear => share your list with others
-confirmation needed for deleting an item / all items (modal appears)
